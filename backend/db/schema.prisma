@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model UserRole {
+  @@map("user_roles")  
+  id String @id @default(cuid()) 
+  name  String @unique
+  users User[]
+}
+
+model User {
+  @@map("users")
+  id String @id @default(cuid()) 
+  email     String   @unique
+  name      String?
+  roleId    String
+  createdAt DateTime @default(now())
+  role      UserRole @relation(fields: [roleId], references: [id])
+}
