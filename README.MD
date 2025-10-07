@@ -32,12 +32,6 @@ my-app/
 │   ├── controllers/
 │   │   ├── AuthController.ts     # REST endpoints for auth
 │   │   └── UserController.ts     # endpoints for user CRUD
-│   ├── api/
-│   │   ├── openapi.yaml          # OpenAPI spec (for hey-api)
-│   │   └── routes/
-│   │       ├── auth.ts           # route handlers (register, login, etc.)
-│   │       ├── oauth.ts          # OAuth redirect + callback
-│   │       └── users.ts
 │   └── utils/
 │       ├── env.ts                # environment variable loader
 │       ├── hash.ts               # bcrypt password hashing
@@ -58,79 +52,17 @@ my-app/
 │
 ├── docker-compose.yml            # optional: postgres/local dev
 ├── .env
-├── openapi-ts.config.ts          # config for @hey-api/openapi-ts. This tells @hey-api/openapi-ts where to find the OpenAPI spec and where to save the generated client. (optional: needed if you want to save your configuration)
 └── package.json
 
+### 🧩 API Design Decision
+This branch (`internal-api`) does **not** use OpenAPI or a generated API client.
 
+Since the frontend (SolidStart) and backend (Prisma + services) live in the same runtime,
+data access is handled through **direct service calls** and **Zod validation**, not HTTP endpoints.
 
-#  Hey-api/openapi-ts installation
-  ``` npx @hey-api/openapi-ts -i ./backend/openapi.yaml -o ./packages/api-client/src/generated ```
-  I put this on CLI command. Just in case, If you want to regenerate api-cleint or use it on another project. you can checkout this README or the offical doc. 
-    You already committed the generated client files (e.g. /src/client).
-    The OpenAPI spec (hey-api/backend or openapi.yaml/json) doesn’t change.
-    You’re reusing your SolidStart starter as a new project base.
-
-  🔁 When you should regenerate
-    You’ve modified your API (new routes, schemas, responses).
-    You’ve moved or renamed the OpenAPI spec file/folder.
-    You want to upgrade the client generator (new version of @hey-api/openapi-ts).
-
-# openapi-ts.config.ts
-  That file is just a saved preset, so you don’t have to retype your CLI command every time.
-
-
-## NOTE: Axios is Optional
-  This starterkit uses [`@hey-api/openapi-ts`](https://github.com/hey-api/openapi-ts) as the primary API client generator.  
-  It creates a fully typed, `fetch`-based SDK for your backend endpoints — meaning **you already have interceptors, type safety, and request configuration built in**.  
-
-  Axios is **optional**, not required. You only need it for specific advanced scenarios.
-
-  ---
-  ### 🧩 TL;DR Summary
-
-  | Option | Runtime | Type Support | Interceptors | Bundle Size | Ecosystem | Ideal For |
-  |--------|----------|---------------|---------------|--------------|-------------|-------------|
-  | **`fetch` (via `@hey-api/fetch`)** | Native | ✅ Full TypeScript from OpenAPI | ✅ Built-in (`OpenAPI.INTERCEPTORS`) | ⚡ Very small | Modern / browser native | Typed SDKs, SSR, simple fetch |
-  | **Axios** | JS library | ✅ with wrappers | ✅ Rich but custom setup | 🧱 Heavier | Mature & large | Legacy projects, Node-heavy backends |
-  ---
-
-### 🧠 When to Use Axios (Partially)
-  Axios is only needed for edge cases that `fetch` doesn’t cover well:
-  | Use Case | Reason |
-  |-----------|--------|
-  | **1️⃣ File uploads/downloads with progress** | `fetch` doesn’t expose upload/download progress events |
-  | **2️⃣ External APIs (not in your OpenAPI spec)** | You might not want to extend your schema for one-off calls |
-  | **3️⃣ Advanced logic (retry, cancellation, token refresh)** | Axios supports rich interceptor chains and `CancelToken` |
-  | **4️⃣ Complex middleware chaining** | Easier with Axios’ global interceptor model |
-  ---
-
-### 🧰 Recommended Pattern
-  Keep your generated client as the **primary source of truth** for backend endpoints,  
-  and use Axios only when a feature demands it.
-
-  ```
-  packages/
-    api-client/ # generated OpenAPI client (fetch-based)
-    core/
-    api/
-    index.ts # unified API facade
-    external.ts # optional Axios wrapper for special cases
-  ```
-
-
-### Example:
-  ```ts
-  // core/api/index.ts
-  import { UsersService } from "@api-client/generated";
-  import { axiosClient } from "./external";
-
-  export const api = {
-    users: UsersService, // typed, fetch-based
-    analytics: {
-      sendEvent: (data) => axiosClient.post("/analytics", data), // external via Axios
-    },
-  };
-  ```
+If we later decide to expose the backend as a standalone REST API,
+OpenAPI client generation (using `@hey-api/openapi-ts`) can be restored
+from the `openapi-client` branch.
 
 ## Vite Config
   You don’t need to create a custom vite.config.ts file — unless:
