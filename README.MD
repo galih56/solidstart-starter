@@ -34,7 +34,6 @@ my-app/
 │   │   └── UserController.ts     # endpoints for user CRUD
 │   └── utils/
 │       ├── env.ts                # environment variable loader
-│       ├── hash.ts               # bcrypt password hashing
 │
 ├── shared/
 │   ├── schemas/
@@ -50,6 +49,7 @@ my-app/
 │   ├── seed.ts                   # optional: seed default users/roles
 │   └── migrate.ts                # run prisma migrate programmatically
 │
+├── tsconfig.json                 # base shared config
 ├── docker-compose.yml            # optional: postgres/local dev
 ├── .env
 └── package.json
