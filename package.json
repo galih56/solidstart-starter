@@ -11,6 +11,7 @@
 		"schema": "backend/db/schema.prisma"
 	},
 	"scripts": {
+    	"dev": "pnpm --filter frontend dev",
 		"db:generate": "prisma generate --schema=backend/db/schema.prisma",
 		"db:reset": "prisma migrate reset --schema=backend/db/schema.prisma",
 		"db:migrate": "prisma migrate dev --schema=backend/db/schema.prisma"
