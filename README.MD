@@ -80,3 +80,9 @@ from the `openapi-client` branch.
   This improves security by:
   - Preventing client-side decoding of tokens.
   - Mitigating XSS/CSRF risks with proper `SameSite`, `Secure`, and `HttpOnly` flags.
+
+
+
+## Testing Setup
+  - Vitest
+    You don’t need dotenv right now for your main app, but for your Vitest tests, you’ll probably still want to load it explicitly — or use .env.test and inject vars via CLI. I use vitest just to test the service classes
