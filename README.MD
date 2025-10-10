@@ -1,5 +1,6 @@
 
 ### Folder Structure
+```
 my-app/
 ├── frontend/                     # SolidStart app (client-side)
 │   ├── src/
@@ -60,7 +61,7 @@ my-app/
 ├── .env
 ├── openapi-ts.config.ts          # config for @hey-api/openapi-ts. This tells @hey-api/openapi-ts where to find the OpenAPI spec and where to save the generated client. (optional: needed if you want to save your configuration)
 └── package.json
-
+```
 
 
 #  Hey-api/openapi-ts installation
