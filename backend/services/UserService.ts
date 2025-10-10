@@ -1,5 +1,5 @@
 import prisma from '../db/client'
-import type { Prisma, User } from '@prisma/client';
+import type { Prisma, User } from '@prisma/client'
 
 export type CreateUserInput = Prisma.UserUncheckedCreateInput;
 export type UpdateUserInput = Prisma.UserUpdateInput;
