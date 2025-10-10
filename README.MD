@@ -1,5 +1,6 @@
 
 ### Folder Structure
+```
 my-app/
 ├── frontend/                     # SolidStart app (client-side)
 │   ├── src/
@@ -53,6 +54,7 @@ my-app/
 ├── docker-compose.yml            # optional: postgres/local dev
 ├── .env
 └── package.json
+```
 
 ### 🧩 API Design Decision
 This branch (`internal-api`) does **not** use OpenAPI or a generated API client.
