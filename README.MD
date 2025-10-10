@@ -56,15 +56,6 @@ my-app/
 └── package.json
 ```
 
-### 🧩 API Design Decision
-This branch (`internal-api`) does **not** use OpenAPI or a generated API client.
-
-Since the frontend (SolidStart) and backend (Prisma + services) live in the same runtime,
-data access is handled through **direct service calls** and **Zod validation**, not HTTP endpoints.
-
-If we later decide to expose the backend as a standalone REST API,
-OpenAPI client generation (using `@hey-api/openapi-ts`) can be restored
-from the `openapi-client` branch.
 
 ## Vite Config
   You don’t need to create a custom vite.config.ts file — unless:
