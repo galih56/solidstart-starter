@@ -4,6 +4,7 @@
 		"@types/node": "^24.7.0",
 		"dotenv": "^17.2.3",
 		"prisma": "^6.16.3",
+		"supertest": "^7.1.4",
 		"tsx": "^4.20.6",
 		"vitest": "^3.2.4"
 	},
@@ -20,6 +21,8 @@
 		"dev": "pnpm --filter frontend dev",
 		"db:generate": "prisma generate --schema=backend/db/schema.prisma",
 		"db:reset": "prisma migrate reset --schema=backend/db/schema.prisma",
-		"db:migrate": "prisma migrate dev --schema=backend/db/schema.prisma"
+		"db:migrate": "prisma migrate dev --schema=backend/db/schema.prisma",
+		"test": "vitest",
+		"test:ui": "vitest --ui"
 	}
 }
