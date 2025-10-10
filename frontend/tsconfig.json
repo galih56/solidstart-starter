@@ -11,9 +11,11 @@
     "strict": true,
     "noEmit": true,
     "types": ["vinxi/types/client"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], /* Optionally, you can add DOM libs (to get full browser type coverage) if you notice missing global browser */
     "isolatedModules": true,
     "paths": {
-      "~/*": ["./src/*"]
+      "~/*": ["./src/*"],
+      "@shared/*": ["../shared/*"]
     }
   }
 }

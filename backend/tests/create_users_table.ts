@@ -1,4 +1,3 @@
-// test-db.ts
 import { PrismaClient } from "@prisma/client";
 import { ulid } from "ulid";
 
@@ -18,9 +17,10 @@ async function main() {
   const user = await prisma.user.create({
     data: {
       id: ulid(),
-      name: "Galih",
-      email: "galih@example.com",
+      name: "Thomas Shelby",
+      email: "thomas@shelby.com",
       roleId: role.id,
+      password : "123456"
     },
   });
   console.log("Created user:", user);
